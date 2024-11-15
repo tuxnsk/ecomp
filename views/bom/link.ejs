@@ -1,0 +1,33 @@
+<%- include("../header") -%>
+
+<h1>Привязка компонентов</h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Количество</th>
+        <th>Обозначение</th>
+        <th>Название</th>
+        <th>Корпус</th>
+        <th class="d-print-none">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const d of model.bom) { %>
+        <tr>
+		  <td><%= d.cnt %></td>
+          <td><%= d.type %></td>
+          <td><%= d.comp %></td>
+          <td><%= d.pack %></td>
+          <td class="d-print-none">
+            
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../footer") -%>

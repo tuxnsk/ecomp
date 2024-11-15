@@ -1,0 +1,27 @@
+<%- include("../header") -%>
+
+<h1>Точно удалить?</h1>
+
+<form action="<%= model.id %>" method="post">
+  <div class="form-horizontal">
+
+    
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="Author">Имя</label>
+  <div class="col-sm-7">
+    <input readonly class="form-control" id="Author" value="<%= model.name %>" />
+  </div>
+</div>
+
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Удалить" class="btn btn-default btn-danger" />
+        <a class="btn btn-outline-dark cancel" href="..">Отмена</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include("../footer") -%>

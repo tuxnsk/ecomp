@@ -1,0 +1,54 @@
+<%- include("../header") -%>
+
+<h1>Добавить</h1>
+
+<form action="" method="post">
+  <div class="form-horizontal">
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="name">Название</label>
+  <div class="col-sm-7">
+    <input class="form-control" name="name" value="" autofocus/>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="type">Тип</label>
+  <div class="col-sm-7">
+    <select class="form-control" name="type" value="" />
+      <% for (const d of model.typeList) { %>
+		<option value="<%= d.id %>"><%= d.name %></option>
+      <% } %>
+    </select>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="pack">Корпус</label>
+  <div class="col-sm-7">
+    <select class="form-control" name="pack" value="" />
+      <% for (const d of model.packList) { %>
+		<option value="<%= d.id %>"><%= d.name %></option>
+      <% } %>
+    </select>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="descr">Описание</label>
+  <div class="col-sm-7">
+    <textarea class="form-control" name="descr" rows="8"></textarea>
+  </div>
+</div>
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Сохранить" class="btn btn-default btn-success" />
+        <a class="btn btn-outline-dark cancel" href="..">Отмена</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include("../footer") -%>

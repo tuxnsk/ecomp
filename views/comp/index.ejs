@@ -1,0 +1,91 @@
+<%- include("../header") -%>
+
+<h1>Список компонентов (<%= model.rows.length %>)</h1>
+
+<form action="" method="get">
+	<div class="form-group row">
+	  <label class="col-form-label col-sm-1" for="search">Поиск</label>
+	  <div class="col-sm-4">
+		<input class="form-control" name="search" value="<%= model.search %>" />
+	  </div>
+	  <div class="col-sm-1">
+		<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-search"></i></button>
+	  </div>
+	  <label class="col-form-label col-sm-2" for="rowCnt">На старнице</label>
+	  <div class="col-sm-2">
+		<select class="form-control" name="rowCnt" onchange="this.form.submit()" />
+			<option value="0" <%= model.rowCnt == 0 ? 'selected' : '' %>>все</option>
+			<option value="20" <%= model.rowCnt == 20 ? 'selected' : '' %>>20</option>
+			<option value="50" <%= model.rowCnt == 50 ? 'selected' : '' %>>50</option>
+			<option value="100" <%= model.rowCnt == 100 ? 'selected' : '' %>>100</option>
+		</select>
+	  </div>
+	  <div class="col-sm-2">
+<nav aria-label="...">
+  <ul class="pagination">
+	<input type="hidden" name="prevPage" value="<%= model.prevPage %>">
+	
+    <li class="page-item <%= model.page == 1 ? 'disabled' : '' %>">
+      <input type="submit" class="page-link" name="page" value="&laquo;">
+    </li>
+    
+      <% for (const pn of model.pageList) { %>
+		<li class="page-item <%= model.page == pn ? 'active' : '' %>">
+			<input type="submit" class="page-link" name="page" value="<%= pn %>">
+		</li>
+      <% } %>
+    
+    <li class="page-item">
+      <input type="submit" class="page-link" name="page" value="&raquo;">
+    </li>
+  </ul>
+</nav>
+	  </div>
+	</div>
+	
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;">
+			ID
+			<button type="submit" class="btn btn-sm <%= model.sort == 'id_asc' ? 'btn-warning' : 'btn-success' %>" name="sort" value="id_asc">&darr;</button>
+			<button type="submit" class="btn btn-sm <%= model.sort == 'id_desc' ? 'btn-warning' : 'btn-success' %>" name="sort" value="id_desc">&uarr;</button>
+		</th>
+        <th style="white-space: nowrap;">
+			Название
+			<button type="submit" class="btn btn-sm <%= model.sort == 'name_asc' ? 'btn-warning' : 'btn-success' %>" name="sort" value="name_asc">&darr;</button>
+			<button type="submit" class="btn btn-sm <%= model.sort == 'name_desc' ? 'btn-warning' : 'btn-success' %>" name="sort" value="name_desc">&uarr;</button>
+		</th>
+        <th>Тип</th>
+        <th>Корпус</th>
+        <th>Описание</th>
+        <th>Количество</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="add/"><i class="bi bi-plus-square"></i></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const d of model.rows) { %>
+        <tr>
+		  <td><%= d.id %></td>
+          <td><%= d.name %></td>
+          <td><%= d.type %></td>
+          <td style="white-space: nowrap;"><%= d.pack %></td>
+          <td><%- d.descr %></td>
+          <td><%= d.cnt %></td>
+          <td class="d-print-none" style="white-space: nowrap;">
+            <a class="btn btn-sm btn-warning" href="edit/<%= d.id %>"><i class="bi bi-pencil"></i></a>
+            <a class="btn btn-sm btn-danger" href="del/<%= d.id %>"><i class="bi bi-trash3"></i></a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+</form>
+
+<%- include("../footer") -%>
