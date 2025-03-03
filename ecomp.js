@@ -689,23 +689,35 @@ app.post("/delete/:id", (req, res) => {
 */
 
 
-
 async function main() {
-		
-	const port = 3080;
-	
-	let httpsOpt = {
-		key: await fsReadFile('/etc/letsencrypt/live/lk.sinlab.ru/privkey.pem'),
-		cert: await fsReadFile('/etc/letsencrypt/live/lk.sinlab.ru/fullchain.pem')
-	};
-	
-	/*
-	app.listen(port, () => {
-		log(`Server listening on port ${port}`);
-	});
-	*/
-	https.createServer(httpsOpt, app).listen(port);
+	const port = process.env.PORT || 3000;
+	const useHttps = process.env.USE_HTTPS === 'true';
+
+	if (useHttps) {
+		try {
+			const httpsOpt = {
+				key: await fsReadFile('/etc/letsencrypt/live/lk.sinlab.ru/privkey.pem'),
+				cert: await fsReadFile('/etc/letsencrypt/live/lk.sinlab.ru/fullchain.pem')
+			};
+			https.createServer(httpsOpt, app).listen(port);
+			log(`HTTPS сервер запущен на порту ${port}`);
+		} catch (error) {
+			log('Ошибка запуска HTTPS сервера:', error);
+			log('Пробуем запустить HTTP сервер...');
+			app.listen(port, () => {
+				log(`HTTP сервер запущен на порту ${port}`);
+			});
+		}
+	} else {
+		app.listen(port, () => {
+			log(`HTTP сервер запущен на порту ${port}`);
+		});
+	}
 }
+
+// Теперь для запуска:
+// 	- Локально: просто запустите `node ecomp.js`
+// 	- На сервере с HTTPS: `USE_HTTPS=true PORT=3080 node ecomp.js`
 
 main();
 
